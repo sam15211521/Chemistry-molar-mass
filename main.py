@@ -81,20 +81,28 @@ class Chemical:
 
 #//////////////////////////////////////////////////////////////////////////////
     
-    def determining_atomic_mass(self, element_dic):
+    def determining_atomic_mass(self):
         formula_mass = 0
-
-        for element in element_dic:
+        element_dict = self.element_dict
+        for element in element_dict:
             element_string = f"ele.{element}.get_mass()"
             element_mass = eval(element_string)
 
-            total_mass_of_the_element = element_mass * element_dic[element]
+            total_mass_of_the_element = element_mass * element_dict[element]
             formula_mass += total_mass_of_the_element 
         self.update_mass(formula_mass)
 
 
-#/////////////////////////////////////////////////////////
+#//////////////////////////////////////////////////////////////////////////////
 
+def classing_formulas(chemical_formula):
+    chemical_to_add = Chemical(chemical_formula, 0)
+    chemical_to_add.find_elements()
+    chemical_to_add.determining_atomic_mass()
+
+    return chemical_to_add
+
+#//////////////////////////////////////////////////////////////////////////////
 
 def yes_no_choice(statment, statment_check_input = "", yes_choice = "", no_choice = "", statment_return = False):
     while True:
@@ -177,22 +185,17 @@ def enter_equation():
 
     return chemical_equation_return
 
+#//////////////////////////////////////////////////////////////////////////////
 
 def enter_formula():
 
     chemical_formula = yes_no_choice(
                 statment=(
-                    "\n\nPlease enter the chemical formula you want"
+                    "\n\nPlease enter the chemical formula you want "
                     "to analyze \nPlease make sure you use appropriate capitilization of "
                     "symbols \n\n"), statment_check_input = "Is this the correct formula?" 
                 )
     return chemical_formula
-
-#///////////////////////////////////////////////////////////////
-def classing_formulas(chemical_formula):
-    chemical_to_add = Chemical(chemical_formula, 0)
-    elements = chemical_to_add.find_elements()
-    return chemical_to_add
 
 
 
@@ -201,6 +204,7 @@ def classing_formulas(chemical_formula):
 os.system('cls')
 chemical_formula = ''
 chemical_equation = ''
+function_choice = ""
 while True:
 
     function_choice = startup()
@@ -215,9 +219,14 @@ starting formula
         sleep(1)
         os.system('cls')
         print(chemical_formula)
-        break
+        new_chemical_formula = classing_formulas(chemical_formula=chemical_formula)
+        print(
+f"The formula mass of {new_chemical_formula.determine_formula()} is:" 
+f"{new_chemical_formula.determine_mass()}")
+        print(
+            "-_____________________________________________-")
 
-    if function_choice == "2":
+    elif function_choice == "2":
         print(
 """\n_______________________\n
 starting equation
@@ -227,7 +236,7 @@ starting equation
         chemical_equation = enter_equation()        
         sleep(1)
         os.system('cls')
-        print(f""" The chemical equation is:
+        print(f"""The chemical equation is:
         {chemical_equation}""")
         break
 
@@ -235,10 +244,5 @@ starting equation
         os.system('cls')
         exit()
 
-if chemical_formula !='':
-    new_chemical_formula = classing_formulas(chemical_formula=chemical_formula)
-    ################################################################
-    print(new_chemical_formula.determine_mass())
-    ################################################################
-elif chemical_equation !='':
+if function_choice == '2':
     print("\nChemical Equation")
