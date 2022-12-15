@@ -2,10 +2,12 @@ from time import sleep
 import os
 import elements as ele
 class Chemical:
-    def __init__(self, formula, mass):
+    def __init__(self, formula):
         self.formula = formula
-        self.element_dict = {}
-        self.mass = mass
+        self.element_dict = self.find_elements()
+        self.mass  = 0
+        
+        self.determining_atomic_mass()
 
     def determine_mass(self):
         return self.mass
@@ -19,6 +21,7 @@ class Chemical:
     def update_mass(self, new_mass):
         self.mass = new_mass
         
+#||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
     # this function returns a dictionary of all the elements of a chemical formula
     # the input is only the formula with NO spaces
@@ -93,12 +96,12 @@ class Chemical:
         self.update_mass(formula_mass)
 
 
+#/
+
 #//////////////////////////////////////////////////////////////////////////////
 
 def classing_formulas(chemical_formula):
-    chemical_to_add = Chemical(chemical_formula, 0)
-    chemical_to_add.find_elements()
-    chemical_to_add.determining_atomic_mass()
+    chemical_to_add = Chemical(chemical_formula)
 
     return chemical_to_add
 
