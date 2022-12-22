@@ -178,7 +178,8 @@ def enter_equation():
                 statment_check_input= "do the products look correct?")
 
 
-    chemical_equation_final_check = f"\n{reactant_chemical_equation} --> {product_chemical_equation}"   
+    chemical_equation_final_check = (
+            f"\n{reactant_chemical_equation} --> {product_chemical_equation}")
     chemical_equation_return = yes_no_choice(
             statment =(chemical_equation_final_check),
             statment_check_input = (
@@ -189,6 +190,8 @@ def enter_equation():
     return chemical_equation_return
 
 #//////////////////////////////////////////////////////////////////////////////
+# Allows users to enter a chemical formula to analyze with the 1st choice of the 
+# program.
 
 def enter_formula():
 
@@ -201,10 +204,35 @@ def enter_formula():
     return chemical_formula
 
 
+#/////////////////////////////////////////////////////////////////////////////
+# Allows users to choose what they want to do with the chemical formula just created
+
+def chemical_equation_choice():
+    choices = input("""What do you want to do with the equation?
+    1) find the mass of each compound
+    2) ballance the chemical equation
+    3) ballance the chemical equation and find the molar masses of each compound
+    4) ballance the chemical equation and launch the stoichiometry app 
+    0) Exit the program
+    """)
+    while True:
+        if choices == '1':
+            pass
+        elif choices == '2':
+            pass
+        elif choices == '3':
+            pass
+        elif choices == '4':
+            pass
+        elif choices == '0':
+            exit()
+        break
 
 #\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 # Here is the start of the programing
+
 os.system('cls')
+os.system('clear')
 chemical_formula = ''
 chemical_equation = ''
 function_choice = ""
@@ -221,13 +249,19 @@ starting formula
         chemical_formula = enter_formula()
         sleep(1)
         os.system('cls')
+        os.system('clear')
         print(chemical_formula)
-        new_chemical_formula = classing_formulas(chemical_formula=chemical_formula)
+        new_chemical_formula = classing_formulas(
+                                chemical_formula = chemical_formula)
         print(
-f"The formula mass of {new_chemical_formula.determine_formula()} is:" 
+f"\nThe formula mass of {new_chemical_formula.determine_formula()} is:" 
 f"{new_chemical_formula.determine_mass()}")
         print(
-            "-_____________________________________________-")
+            """
+            
+            -_____________________________________________-
+
+            """)
 
     elif function_choice == "2":
         print(
@@ -239,13 +273,15 @@ starting equation
         chemical_equation = enter_equation()        
         sleep(1)
         os.system('cls')
+        os.system('clear')
         print(f"""The chemical equation is:
         {chemical_equation}""")
         break
 
     if function_choice == "0":
         os.system('cls')
+        os.system('clear')
         exit()
 
 if function_choice == '2':
-    print("\nChemical Equation")
+    chemical_equation_choice()
