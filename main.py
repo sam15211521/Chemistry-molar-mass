@@ -238,7 +238,7 @@ chemical_equation = ''
 function_choice = ""
 while True:
 
-    function_choice = startup()
+    function_choice = startup() # startup chooses either formula or equaiton 
     if function_choice == "1":
         print(
 """\n_______________________\n
@@ -246,7 +246,7 @@ starting formula
 \n_______________________\n""")
         sleep(1)
 
-        chemical_formula = enter_formula()
+        chemical_formula = enter_formula() # where you enter the formula
         sleep(1)
         os.system('cls')
         os.system('clear')
@@ -270,11 +270,12 @@ starting equation
 \n_______________________\n""")
         sleep(1)
 
-        chemical_equation = enter_equation()        
+        chemical_equation = enter_equation() # where you enter the chemical equation        
         sleep(1)
         os.system('cls')
         os.system('clear')
-        print(f"""The chemical equation is:
+        print(
+        f"""The chemical equation is:
         {chemical_equation}""")
         break
 
@@ -282,6 +283,7 @@ starting equation
         os.system('cls')
         os.system('clear')
         exit()
+
 
 if function_choice == '2':
     chemical_equation_choice()
