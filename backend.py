@@ -115,8 +115,36 @@ def classing_formulas(chemical_formula):
 def breaking_up_equations(equation):
     reactant_product_dict = {} 
     reactants_and_products = equation.replace(' ', '').split('-->')
-    reactant_product_dict['reactants'] = reactants_and_products[0].split('+')
-    reactant_product_dict['products'] = reactants_and_products[1].split('+')
+    
+    reactants = reactants_and_products[0].split('+')
+    products = reactants_and_products[1].split('+')
+
+    fixed_current_reactant = ''
+    fixed_reactants = []
+    for compound_reactant in reactants:
+        fixed_current_reactant = compound_reactant
+        for symbol in compound_reactant:
+            if symbol.isalpha():
+                break
+            else:
+                fixed_current_reactant = fixed_current_reactant[1:]
+        fixed_reactants.append(fixed_current_reactant)
+    reactant_product_dict['reactants'] = fixed_reactants
+
+
+
+    fixed_current_product = ''
+    fixed_products = []
+    for compound_product in products:
+        fixed_current_product= compound_product
+        for symbol in compound_product:
+            if symbol.isalpha():
+                break
+            else:
+                fixed_current_product = fixed_current_product[1:]
+        fixed_products.append(fixed_current_product)
+    reactant_product_dict['products'] = fixed_products
+        
     return reactant_product_dict
 
 # second fuction  takes the dictionary from breaking_up_equations and converts
@@ -127,6 +155,23 @@ def separating_reactants_or_products(equation_dictionary, reactant_or_product):
         chemical = Chemical(compound)
         chemical_dictionary[chemical.determine_formula()] = chemical
     return chemical_dictionary
+    # example return: {"CH4" : Chemical("CH4", 16.04, {"C" : 1, "H" : 4}), ...}
+
+
+## third function determines the number of atoms in the reactants or products
+# based on the formula and output of "separating_reactants_or_products" function
+
+def how_many_atoms(equation,
+                reactant_compound_object_dictionary,
+                product_compound_object_dictionary):
+    amount_of_compounds_dictionary_reactants = {}
+    amount_of_compounds_dictionary_products = {}
+
+
+    just_the_equation = equation.replace(' ', '')
+    for compound in reactant_compound_object_dictionary.values():
+
+    
 
 
 
@@ -134,17 +179,20 @@ def separating_reactants_or_products(equation_dictionary, reactant_or_product):
 
 
 
-a = separating_reactants_or_products(
-        breaking_up_equations('C + O2 --> CO2 + CO'), 
-                            'products'
-        )
-b = separating_reactants_or_products(
-        breaking_up_equations('C + O2 --> CO2 + CO'), 
-                            'reactants'
-        )
 
-for i in a:
-    print (a[i].determine_element_amounts())
-print()
-for i in b:
-    print(b[i].determine_element_amounts())
+chemical_equation = '4C + 2O2 --> CO2 + 2CO'
+
+reaction_dictionary = separating_reactants_or_products(
+                breaking_up_equations(chemical_equation), 'reactants')
+
+product_dictionary = separating_reactants_or_products(
+                breaking_up_equations(chemical_equation), 'products')
+
+print(how_many_atoms(chemical_equation, reaction_dictionary, product_dictionary))
+for compound in reaction_dictionary.values():
+    print('reactants: ', compound.determine_formula())
+
+
+for compound in product_dictionary.values():
+    print('products: ', compound.determine_formula())
+    
