@@ -207,6 +207,10 @@ def multiply_coeficient_by_subscripts(equation_string):
                     )
                 )
     return [element_amounts_reactants, element_amounts_products]
+
+
+
+
     
 
 
@@ -216,9 +220,8 @@ chemical_equation = '24CO + 12O2 --> CO2 + 2CO'
 
 amount_of_elements_list = multiply_coeficient_by_subscripts(chemical_equation)
 
-for reactant_or_product in amount_of_elements_list:
-    for element in reactant_or_product:
-        print(element.get_mass())
 print(amount_of_elements_list)
-
-print(global_reaction_dictionary)
+print()
+for i in amount_of_elements_list:
+    for j in i:
+        print(j.get_symbol(), " : ", i[j] , '\n')
